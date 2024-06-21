@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="1">login</button>
+    <script>
+      let bottone = document.getElementById("1");
+      document.addEventListener("DOMContentLoaded", function () {
+        let log = localStorage.getItem("isLogged");
+        if (log !== "true") {
+          bottone.textContent = "login";
+        } else {
+          bottone.textContent = "logout";
+        }
+        function test() {
+          let log = localStorage.getItem("isLogged");
+          if (log !== "true") {
+            localStorage.setItem("isLogged", "true");
+            bottone.textContent = "logout";
+          } else {
+            localStorage.setItem("isLogged", "false");
+            bottone.textContent = "login";
+          }
+        }
+        bottone.addEventListener("click", test);
+      });
+    </script>
+  </body>
+</html>
