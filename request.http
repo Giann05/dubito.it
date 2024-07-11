@@ -1,0 +1,17 @@
+###API REGISTER
+POST http:/localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+    "email":"gian@example.com",
+    "password":"1234"
+}
+
+###USER LIST
+GET http:/localhost:3000/api/auth/
+Content-Type: application/json
+
+{
+    "email":"gian@example.com",
+    "password":"1234"
+}
