@@ -26,7 +26,7 @@ export class App {
   }
   addAds(
     title: string,
-    desciption: string,
+    description: string,
     category: string,
     urlPhoto: string,
     status: string,
@@ -37,11 +37,12 @@ export class App {
     const authFound = this.getUserByToken(token);
     if (!authFound) {
       console.log("errore,token non valido");
+      return false;
     } else {
       const ads = new ModelAd(
         authFound.referenceKeyUser,
         title,
-        desciption,
+        description,
         category,
         urlPhoto,
         status,
@@ -49,8 +50,8 @@ export class App {
         address
       );
       this.ads = [...this.ads, ads];
+      return true;
     }
-    console.log("annuncio aggiunto con successo");
   }
   addRewiew(
     referenceKeyAds: number,
@@ -334,13 +335,13 @@ export class App {
     const authFound = this.getUserByToken(token);
     if (!authFound) {
       console.log("errore,token non valido");
-      return;
+      return false;
     }
     this.auth = this.auth.filter(function (key) {
       if (token !== key.token) return true;
       else return false;
     });
-    console.log("Logout effettuato con successo");
+    return true;
   }
   updateRewiew(
     referenceKeyRewiew: number,
@@ -476,7 +477,7 @@ export class App {
     return this.users.find(OnFind);
   }
   registerDevice(id: number, token: number, name: string) {
-    const auth = this.getAuthByToken(token);
+    const auth = this.getUserByToken(token);
     if (!auth) {
       console.log("Errore, token non valido");
       return;
@@ -494,12 +495,45 @@ export class App {
     ];
     console.log("Dispositivo registrato con successo");
   }
-  getAuthByToken(token: number) {
-    return this.auth.find(function (auth) {
-      auth.token === token;
-    });
+
+  getListUsers(token: number) {
+    const auth = this.getUserByToken(token);
+    if (!auth) {
+      console.log("errore,token non valido");
+      return;
+    } else {
+      return this.users;
+    }
+  }
+  getlistAds(token: number) {
+    const auth = this.getUserByToken(token);
+    if (!auth) {
+      console.log("errore,token non valido");
+      return;
+    } else {
+      return this.ads;
+    }
+  }
+  getlistUserlogged(token: number) {
+    const auth = this.getUserByToken(token);
+    if (!auth) {
+      console.log("errore,token non valido");
+      return;
+    } else {
+      return this.auth;
+    }
+  }
+  getListFavorites(token: number) {
+    const auth = this.getUserByToken(token);
+    if (!auth) {
+      console.log("errore,token non valido");
+      return;
+    } else {
+      return this.favorite;
+    }
   }
 }
+
 const apis = {
   register: new DocAPI("/auth/register", "POST", false),
   login: new DocAPI("/auth/login", "POST", false),
@@ -520,4 +554,8 @@ const apis = {
     true
   ),
   registerDevice: new DocAPI("/devices/{referenceKeyUser}", "POST", true),
+  listUsers: new DocAPI("/users", "GET", true),
+  listAds: new DocAPI("/ads", "GET", true),
+  listUserlogged: new DocAPI("/auth", "GET", true),
+  istFavorites: new DocAPI("/favorites", "GET", true),
 };

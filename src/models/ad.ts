@@ -6,7 +6,7 @@ export class ModelAd {
   addres: string;
   referenceKeyUser: ModelUser["primaryKey"];
   title: string;
-  desciption: string;
+  description: string;
   category: string;
   urlPhotorlPhoto: string;
   status: string;
@@ -14,7 +14,7 @@ export class ModelAd {
   constructor(
     referenceKeyUser: number,
     title: string,
-    desciption: string,
+    description: string,
     category: string,
     urlPhoto: string,
     status: string,
@@ -24,7 +24,7 @@ export class ModelAd {
     this.primaryKey = Math.random();
     this.referenceKeyUser = referenceKeyUser;
     this.title = title;
-    this.desciption = desciption;
+    this.description = description;
     this.category = category;
     this.urlPhotorlPhoto = urlPhoto;
     this.status = status;
