@@ -83,6 +83,20 @@ app.get("/ads", function (req: Request, res: Response) {
   if (ads) return res.status(200).json(ads);
   else return res.status(400).json({ message: "non ci sono annunci" });
 });
+app.get("/users", function (req: Request, res: Response) {
+  const token = Number(req.headers.authorization);
+  if (!token) return res.status(400).json({ message: "token non esistente" });
+  const users = myApp.getListUsers(token);
+  if (users) return res.status(200).json(users);
+  else return res.status(400).json({ message: "non ci sono utenti" });
+});
+app.get("/favorites/:referenceKeyUser", function (req: Request, res: Response) {
+  const token = Number(req.headers.authorization);
+  if (!token) return res.status(400).json({ message: "token non esistente" });
+  const favorite = myApp.getListFavorites(token);
+  if (favorite) return res.status(200).json(favorite);
+  else return res.status(400).json({ message: "non ci sono annunci" });
+});
 // routerApi.use("use/", routerApi),
 //   app.get("/", function (req: Request, res: Response) {
 //     return res.status(200).sendFile(__dirname + "/index.html");

@@ -527,9 +527,16 @@ export class App {
     const auth = this.getUserByToken(token);
     if (!auth) {
       console.log("errore,token non valido");
-      return;
+      return null;
     } else {
-      return this.favorite;
+      const list = this.favorite.filter(function (users) {
+        if (auth.referenceKeyUser == users.referenceKeyUser) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+      return list;
     }
   }
 }
@@ -557,5 +564,5 @@ const apis = {
   listUsers: new DocAPI("/users", "GET", true),
   listAds: new DocAPI("/ads", "GET", true),
   listUserlogged: new DocAPI("/auth", "GET", true),
-  istFavorites: new DocAPI("/favorites", "GET", true),
+  listFavoritesUser: new DocAPI("/favorites/{referenceKeyUser}", "GET", true),
 };
